@@ -16,6 +16,7 @@ namespace JbSoftTech.BookStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,14 +27,32 @@ namespace JbSoftTech.BookStore
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("1st middelware");
+            //    await next();
+            //});
+
+            //app.Use(async (context, next) =>
+            //{
+            //    await context.Response.WriteAsync("2nd middelware");
+            //});
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync(env.EnvironmentName);
                 });
+            });
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapGet("/Bhavesh",async context => 
+                {
+                    await context.Response.WriteAsync("Hello Bhavesh");
+                });    
             });
         }
     }
